@@ -14,8 +14,8 @@ import java.util.List;
  */
 
 public class HashTable {
-    private int tableSize;
-    private SinglyLinkedList[] elements;
+    private final int tableSize;
+    private final SinglyLinkedList[] elements;
     /**
      * The constructor is given a table size (i.e. how big to make the array)
      * and a StringHasher, which is used to hash the strings.
@@ -39,7 +39,7 @@ public class HashTable {
     public void add(String s) {
         int position = getPositionByHash(s);
         if (elements[position] == null) {
-            elements[position] = new SinglyLinkedList<>();
+            elements[position] = new SinglyLinkedList();
         }
         elements[position].insert(s);
     }
@@ -58,6 +58,9 @@ public class HashTable {
      */
     public boolean lookup(String s) {
         int position = getPositionByHash(s);
+        if (elements[position] == null) {
+            return false;
+        }
         return elements[position].search(s) > 0;
     }
 
@@ -70,7 +73,7 @@ public class HashTable {
      */
     public void remove(String s) {
         int position = getPositionByHash(s);
-        SinglyLinkedList<String> list =  elements[position];
+        SinglyLinkedList list =  elements[position];
         if (list.search(s) > 0) {
             list.delete(list.search(s));
         }

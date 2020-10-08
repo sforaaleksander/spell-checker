@@ -1,17 +1,17 @@
 package com.codecool;
 
-public class SinglyLinkedList<V> {
+public class SinglyLinkedList {
 
     private class Link {
 
-        private final V value;
+        private final String value;
         private Link next;
 
-        Link(V value) {
+        Link(String value) {
             this.value = value;
         }
 
-        V getValue() {
+        String getValue() {
             return value;
         }
 
@@ -30,13 +30,13 @@ public class SinglyLinkedList<V> {
     }
 
     // Returns the number at 'index'.
-    public V access(int index) {
+    public String access(int index) {
         Link link = getLinkAtIndex(index);
         return link.getValue();
     }
 
     // Returns the index of 'number' if it's in the array, otherwise -1;
-    public int search(V value) {
+    public int search(String value) {
         if (head==null) return -1;
         Link link = head;
         int index = 0;
@@ -69,7 +69,7 @@ public class SinglyLinkedList<V> {
         return link;
     }
 
-    public void insert(V value) {
+    public void insert(String value) {
         if (head == null) {
             head = new Link(value);
         } else {
@@ -83,7 +83,7 @@ public class SinglyLinkedList<V> {
     // Inserts 'number' at 'index' into the array shifting elements if necessary.
     //
     // e.g. the result of inserting 42 at index 3 into [0, 1, 2, 3, 4] is [0, 1, 2, 42, 3, 4]
-    public void insert(int index, V value) {
+    public void insert(int index, String value) {
         if (head == null) {
             head = new Link(value);
         } else if (index == 0) {

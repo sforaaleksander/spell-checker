@@ -60,6 +60,7 @@ public class WordChecker {
         suggestions.addAll(insertLetterInBetween(word));
         suggestions.addAll(deleteEachLetter(word));
         suggestions.addAll(replaceEachLetter(word));
+        suggestions.addAll(addSpaceBetweenEachLetter(word));
         return suggestions;
     }
 
@@ -128,5 +129,22 @@ public class WordChecker {
             }
         }
         return suggestions;
+    }
+
+    private Collection<? extends String> addSpaceBetweenEachLetter(String word) {
+        List<String> suggestions = new ArrayList<>();
+        for (int i = 0; i < word.length() - 1; i++) {
+            for (int j = 0; j < word.length() - 1; j++) {
+                String s1 = word.substring(0, i);
+                String s2 = word.substring(j);
+                if (wordList.lookup(s1)) {
+                    suggestions.add(s1);
+                }
+                if (wordList.lookup(s2)) {
+                    suggestions.add(s2);
+                }
+            }
+        }
+    return suggestions;
     }
 }

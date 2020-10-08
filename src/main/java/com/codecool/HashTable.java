@@ -1,5 +1,8 @@
 package com.codecool;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * ICS 23 Summer 2004
  * Project #5: Lost for Words
@@ -10,6 +13,18 @@ package com.codecool;
  */
 
 public class HashTable {
+    class Node<K, V> {
+        public K key;
+        public V value;
+        public Node next;
+
+        public Node(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    private int tableSize;
+    private SinglyLinkedList<Node<String, String>>[] elements;
     /**
      * The constructor is given a table size (i.e. how big to make the array)
      * and a StringHasher, which is used to hash the strings.
@@ -19,7 +34,8 @@ public class HashTable {
      * @see StringHasher
      */
     public HashTable(int tableSize, StringHasher hasher) {
-
+        this.tableSize = tableSize;
+        private List<HashMapExample.Node<K, V>>[] elements = new LinkedList[bucketSize];
     }
 
 
@@ -30,7 +46,17 @@ public class HashTable {
      * @param s String to add
      */
     public void add(String s) {
-
+        int position = getPositionByHash(key);
+        if (elements[position] == null) {
+            elements[position] = new LinkedList<>();
+        }
+        Node<K, V>  node = findNodeWithKey(elements[position], key);
+        if (node != null){
+            node.value = value;
+        } else {
+            node = new Node<K, V>(key, value);
+            elements[position].add(node);
+        }
     }
 
 

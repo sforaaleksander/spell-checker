@@ -69,6 +69,17 @@ public class SinglyLinkedList<V> {
         return link;
     }
 
+    public void insert(V value) {
+        if (head == null) {
+            head = new Link(value);
+        } else {
+            Link previousLink = getLastElement();
+            Link link = new Link(value);
+            link.setNext(previousLink.getNext());
+            previousLink.setNext(link);
+        }
+    }
+
     // Inserts 'number' at 'index' into the array shifting elements if necessary.
     //
     // e.g. the result of inserting 42 at index 3 into [0, 1, 2, 3, 4] is [0, 1, 2, 42, 3, 4]

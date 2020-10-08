@@ -1,5 +1,6 @@
 package com.codecool;
 
+import java.security.InvalidKeyException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,18 +14,8 @@ import java.util.List;
  */
 
 public class HashTable {
-    class Node<K, V> {
-        public K key;
-        public V value;
-        public Node next;
-
-        public Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
     private int tableSize;
-    private SinglyLinkedList<Node<String, String>>[] elements;
+    private SinglyLinkedList[] elements;
     /**
      * The constructor is given a table size (i.e. how big to make the array)
      * and a StringHasher, which is used to hash the strings.
@@ -35,7 +26,7 @@ public class HashTable {
      */
     public HashTable(int tableSize, StringHasher hasher) {
         this.tableSize = tableSize;
-        private List<HashMapExample.Node<K, V>>[] elements = new LinkedList[bucketSize];
+        this.elements = new SinglyLinkedList[tableSize];
     }
 
 
@@ -46,17 +37,16 @@ public class HashTable {
      * @param s String to add
      */
     public void add(String s) {
-        int position = getPositionByHash(key);
+        int position = getPositionByHash(s);
         if (elements[position] == null) {
-            elements[position] = new LinkedList<>();
+            elements[position] = new SinglyLinkedList<>();
         }
-        Node<K, V>  node = findNodeWithKey(elements[position], key);
-        if (node != null){
-            node.value = value;
-        } else {
-            node = new Node<K, V>(key, value);
-            elements[position].add(node);
-        }
+        elements[position].insert(s);
+    }
+
+    private int getPositionByHash(String s) {
+        int hashcode = s.hashCode();
+        return Math.abs(hashcode % tableSize);
     }
 
 
@@ -67,7 +57,8 @@ public class HashTable {
      * @param s String to look up
      */
     public boolean lookup(String s) {
-        return false;
+        int position = getPositionByHash(s);
+        return elements[position].search(s) > 0;
     }
 
 
@@ -78,6 +69,10 @@ public class HashTable {
      * @param s String to remove
      */
     public void remove(String s) {
-
+        int position = getPositionByHash(s);
+        SinglyLinkedList<String> list =  elements[position];
+        if (list.search(s) > 0) {
+            list.delete(list.search(s));
+        }
     }
 }

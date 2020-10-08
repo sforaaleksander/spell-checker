@@ -1,6 +1,8 @@
 package com.codecool;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,6 +56,24 @@ public class WordChecker {
      */
     public List<String> getSuggestions(String word) {
         List<String> suggestions = new ArrayList<>();
+        suggestions.addAll(adjacentPairSwap(word));
+        return suggestions;
+    }
+
+    private List<String> adjacentPairSwap(String word){
+        List<String> suggestions = new ArrayList<>();
+        String swapped;
+        char[] letters = word.toCharArray();
+        for (int i=0;i<letters.length-2;i++) {
+            letters = word.toCharArray();
+            char temp = letters[i];
+            letters[i] = letters[i+1];
+            letters[i+1] = temp;
+            swapped = String.valueOf(letters);
+            if (wordList.lookup(swapped)) {
+                suggestions.add(swapped);
+            }
+        }
         return suggestions;
     }
 }

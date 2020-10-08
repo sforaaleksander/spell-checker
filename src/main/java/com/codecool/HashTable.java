@@ -12,6 +12,7 @@ package com.codecool;
 public class HashTable {
     private final int tableSize;
     private final SinglyLinkedList[] elements;
+    private final StringHasher haser;
     /**
      * The constructor is given a table size (i.e. how big to make the array)
      * and a StringHasher, which is used to hash the strings.
@@ -22,6 +23,7 @@ public class HashTable {
      */
     public HashTable(int tableSize, StringHasher hasher) {
         this.tableSize = tableSize;
+        this.haser = hasher;
         this.elements = new SinglyLinkedList[tableSize];
     }
 
@@ -41,7 +43,7 @@ public class HashTable {
     }
 
     private int getPositionByHash(String s) {
-        int hashcode = s.hashCode();
+        int hashcode = haser.hash(s);
         return Math.abs(hashcode % tableSize);
     }
 

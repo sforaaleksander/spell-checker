@@ -20,6 +20,7 @@ import java.util.List;
  */
 
 public class WordChecker {
+    private WordList wordList;
     /**
      * Constructor that initializes a new WordChecker with a given WordList.
      *
@@ -27,7 +28,7 @@ public class WordChecker {
      * @see WordList
      */
     public WordChecker(WordList wordList) {
-
+        this.wordList = wordList;
     }
 
 
@@ -39,7 +40,7 @@ public class WordChecker {
      * @return bollean indicating if the word was found or not.
      */
     public boolean wordExists(String word) {
-        return true;
+        return wordList.lookup(word);
     }
 
 

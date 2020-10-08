@@ -1,9 +1,5 @@
 package com.codecool;
 
-import java.security.InvalidKeyException;
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * ICS 23 Summer 2004
  * Project #5: Lost for Words
@@ -61,7 +57,7 @@ public class HashTable {
         if (elements[position] == null) {
             return false;
         }
-        return elements[position].search(s) > 0;
+        return elements[position].search(s) >= 0;
     }
 
 

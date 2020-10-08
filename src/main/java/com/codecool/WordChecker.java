@@ -57,6 +57,7 @@ public class WordChecker {
     public List<String> getSuggestions(String word) {
         List<String> suggestions = new ArrayList<>();
         suggestions.addAll(adjacentPairSwap(word));
+        suggestions.addAll(insertLetterInBetween(word));
         return suggestions;
     }
 
@@ -75,5 +76,29 @@ public class WordChecker {
             }
         }
         return suggestions;
+    }
+
+    private List<String> insertLetterInBetween(String word) {
+        List<String> suggestions = new ArrayList<>();
+        String fixedWord;
+        char[] original = word.toCharArray();
+        char[] letters = new char[original.length+1];
+        for (int i=0;i<letters.length;i++) {
+            System.arraycopy(original, 0, letters, 0, original.length);
+            moveLetters(letters, i, original.length);
+            for(char c = 'A'; c <= 'Z'; ++c) {
+                letters[i] = c;
+                fixedWord = String.valueOf(letters);
+                if (wordList.lookup(fixedWord)) {
+                    suggestions.add(fixedWord);
+                }
+            }
+        }
+        return suggestions;
+    }
+
+    private char[] moveLetters(char[] array, int start, int end) {
+        if (end - start >= 0) System.arraycopy(array, start + 1, array, start + 1 + 1, end - start);
+        return array;
     }
 }

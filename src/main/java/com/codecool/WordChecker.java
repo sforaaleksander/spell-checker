@@ -1,6 +1,7 @@
 package com.codecool;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class WordChecker {
     private WordList wordList;
+
     /**
      * Constructor that initializes a new WordChecker with a given WordList.
      *
@@ -56,18 +58,20 @@ public class WordChecker {
         List<String> suggestions = new ArrayList<>();
         suggestions.addAll(adjacentPairSwap(word));
         suggestions.addAll(insertLetterInBetween(word));
+        suggestions.addAll(deleteEachLetter(word));
+        suggestions.addAll(replaceEachLetter(word));
         return suggestions;
     }
 
-    private List<String> adjacentPairSwap(String word){
+    private List<String> adjacentPairSwap(String word) {
         List<String> suggestions = new ArrayList<>();
         String swapped;
         char[] letters = word.toCharArray();
-        for (int i=0;i<letters.length-2;i++) {
+        for (int i = 0; i < letters.length - 2; i++) {
             letters = word.toCharArray();
             char temp = letters[i];
-            letters[i] = letters[i+1];
-            letters[i+1] = temp;
+            letters[i] = letters[i + 1];
+            letters[i + 1] = temp;
             swapped = String.valueOf(letters);
             if (wordList.lookup(swapped)) {
                 suggestions.add(swapped);
@@ -80,11 +84,11 @@ public class WordChecker {
         List<String> suggestions = new ArrayList<>();
         String fixedWord;
         char[] original = word.toCharArray();
-        char[] letters = new char[original.length+1];
-        for (int i=0;i<letters.length;i++) {
+        char[] letters = new char[original.length + 1];
+        for (int i = 0; i < letters.length; i++) {
             System.arraycopy(original, 0, letters, 0, original.length);
             moveLetters(letters, i, original.length);
-            for(char c = 'A'; c <= 'Z'; ++c) {
+            for (char c = 'A'; c <= 'Z'; ++c) {
                 letters[i] = c;
                 fixedWord = String.valueOf(letters);
                 if (wordList.lookup(fixedWord)) {
@@ -97,5 +101,32 @@ public class WordChecker {
 
     private void moveLetters(char[] array, int start, int end) {
         if (end - start >= 0) System.arraycopy(array, start, array, start + 1, end - start);
+    }
+
+    private List<String> deleteEachLetter(String word) {
+        List<String> suggestions = new ArrayList<>();
+        String replaced;
+        for (int i = 0; i < word.length() - 1; i++) {
+            replaced = new StringBuilder(word).deleteCharAt(i).toString();
+            if (wordList.lookup(replaced)) {
+                suggestions.add(replaced);
+            }
+        }
+        return suggestions;
+    }
+
+    private List<String> replaceEachLetter(String word) {
+        List<String> suggestions = new ArrayList<>();
+        for (int i = 0; i < word.length() - 1; i++) {
+            for (char c = 'A'; c <= 'Z'; ++c) {
+                StringBuilder sb = new StringBuilder(word);
+                sb.setCharAt(i, c);
+                String string = sb.toString();
+                if (wordList.lookup(string)) {
+                    suggestions.add(string);
+                }
+            }
+        }
+        return suggestions;
     }
 }

@@ -1,8 +1,6 @@
 package com.codecool;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -97,8 +95,7 @@ public class WordChecker {
         return suggestions;
     }
 
-    private char[] moveLetters(char[] array, int start, int end) {
-        if (end - start >= 0) System.arraycopy(array, start + 1, array, start + 1 + 1, end - start);
-        return array;
+    private void moveLetters(char[] array, int start, int end) {
+        if (end - start >= 0) System.arraycopy(array, start, array, start + 1, end - start);
     }
 }

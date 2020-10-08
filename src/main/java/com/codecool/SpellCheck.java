@@ -1,17 +1,22 @@
 package com.codecool;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Paths;
 
 public class SpellCheck
 {
-    public static void main(final String[] array) {
+    public static void main(String[] array) {
         if (array.length == 0) {
             showUsageMessage();
             return;
         }
         final String s = array[array.length - 1];
-        String s2 = "wordlist.txt";
+
+        String s2 = getAbsolutePathForResourceFile("/wordlist.txt");
         StringHasher o = new LousyStringHasher();
         PrintStream out = System.out;
         boolean b = false;
@@ -54,6 +59,17 @@ public class SpellCheck
         catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    private static String getAbsolutePathForResourceFile(String fileName) {
+        URL resource = SpellCheck.class.getResource(fileName);
+        String s = "";
+        try {
+            s = String.valueOf(Paths.get(resource.toURI()));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return s;
     }
 
     private static void showUsageMessage() {
